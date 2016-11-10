@@ -1,8 +1,8 @@
 #include <MeggyJrSimple.h>    // Required code, line 1 of 2.
 
-int xStalagtite = 7;
+int xStalagtite = 8;
 int yStalagtite = 5; // Declares various variables
-int xStalagmite = 7;
+int xStalagmite = 8;
 int yStalagmite = 1;
 int xHead = 1;
 int yHead = 5;
@@ -55,10 +55,39 @@ void drawStage()
   DisplaySlate();
 }
 
+void drawStalagtite()
+{
+  DrawPx(xStalagtite,yStalagtite,DimBlue);
+  DisplaySlate();
+}
+
+void moveStalagtite()
+{
+  xStalagtite = xStalagtite - 1;
+  DrawPx(xStalagtite + 1,5,Dark);
+  drawStalagtite();
+  delay(1000); 
+}
+
+void checkStalagtite()
+{
+  if (xStalagtite == 0)
+   {
+     xStalagtite = 8;
+     drawStalagtite();
+     DrawPx(0,5,Dark);
+   }
+  else drawStalagtite();
+}
+
 void loop()                     // run over and over again
 {
-  CheckButtonsDown();   //Check to see which buttons  are down.
+  drawStage();
+  moveStalagtite();
+  checkStalagtite();
 
+CheckButtonsPress();
+{
   if (Button_B)
   {       
     xHead = 1;
@@ -86,9 +115,6 @@ void loop()                     // run over and over again
     DrawPx(xLeg,yLeg,Red);
     DisplaySlate();
   }  
-  
-  drawStage();
-  
 }
-
+}
 
