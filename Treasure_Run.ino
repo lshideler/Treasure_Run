@@ -3,7 +3,7 @@
 int xStalagtite = 8;
 int yStalagtite = 5; // Declares various variables
 int xStalagmite = 8;
-int yStalagmite = 1;
+int yStalagmite = 2;
 int xHead = 1;
 int yHead = 5;
 int xLeg = 1;
@@ -12,6 +12,7 @@ int yLeg = 2;
 void setup()                    // run once, when the sketch starts   
 {
   MeggyJrSimpleSetup();      // Required code, line 2 of 2.
+  Serial.begin(9600);
 }
 
 void drawStage()
@@ -71,6 +72,7 @@ void moveStalagtite()
 
 void checkStalagtite()
 {
+  Serial.print("function called");
   if (xStalagtite == 0)
    {
      xStalagtite = 8;
@@ -80,13 +82,41 @@ void checkStalagtite()
   else drawStalagtite();
 }
 
+void drawStalagmite()
+{
+  DrawPx(xStalagmite,yStalagmite,DimBlue);
+  DisplaySlate();
+}
+
+void moveStalagmite()
+{
+  xStalagmite = xStalagmite - 1;
+  DrawPx(xStalagmite + 1,2,Dark);
+  drawStalagmite();
+  delay(1000); 
+}
+
+void checkStalagmite()
+{
+  Serial.print("function called");
+  if (xStalagmite == 0)
+   {
+     xStalagmite = 8;
+     drawStalagtite();
+     DrawPx(0,2,Dark);
+   }
+  else drawStalagmite();
+}
+
 void loop()                     // run over and over again
 {
   drawStage();
   moveStalagtite();
   checkStalagtite();
+  moveStalagmite();
+  checkStalagmite();
 
-CheckButtonsPress();
+CheckButtonsDown();
 {
   if (Button_B)
   {       
