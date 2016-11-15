@@ -8,6 +8,8 @@ int xHead = 1;
 int yHead = 5;
 int xLeg = 1;
 int yLeg = 2;
+boolean Ducking = false;
+boolean Jumping = false;
 
 void setup()                    // run once, when the sketch starts   
 {
@@ -72,7 +74,6 @@ void moveStalagtite()
 
 void checkStalagtite()
 {
-  Serial.print("function called");
   if (xStalagtite == 0)
    {
      xStalagtite = 8;
@@ -108,43 +109,67 @@ void checkStalagmite()
   else drawStalagmite();
 }
 
+void checkHead()
+{
+  if (Ducking == true)
+   {   
+    xHead == 1;
+    yHead == 4;
+    DrawPx(1,5,Dark);
+    DisplaySlate();
+   } 
+  if (Ducking == false) 
+   {    
+    xHead == 1;
+    yHead == 5;
+    DrawPx(xHead,yHead,Red);
+    DisplaySlate();
+   } 
+}
+
+void checkLeg()
+{
+  if (Jumping == true)
+  {    
+    xLeg == 1;
+    yLeg == 3;
+    DrawPx(1,2,Dark);
+    DisplaySlate();
+  }  
+  if (Jumping == false) 
+  {    
+    xLeg == 1;
+    yLeg == 2;
+    DrawPx(xLeg,yLeg,Red);
+    DisplaySlate();
+  } 
+}
+
 void loop()                     // run over and over again
 {
   drawStage();
+  checkStalagmite();
+  checkHead();
+  checkLeg();
   moveStalagtite();
   checkStalagtite();
   moveStalagmite();
-  checkStalagmite();
-
+  
 CheckButtonsDown();
-{
+ {
   if (Button_B)
-  {       
-    xHead = 1;
-    yHead = 4;
-    DrawPx(xHead,yHead,Red);
-    DrawPx(1,5,Dark);
-    DisplaySlate(); 
-    delay(1000);
-    xHead = 1;
-    yHead = 5;
-    DrawPx(xHead,yHead,Red);
-    DisplaySlate();
-  } 
-
+  {
+    Ducking == true;
+    delay(1500);
+    Ducking == false;   
+  }
   if (Button_A)
-  {       
-    xLeg = 1;
-    yLeg = 3;
-    DrawPx(xLeg,yLeg,Red);
-    DrawPx(1,2,Dark);
-    DisplaySlate();
-    delay(1000);
-    xLeg = 1;
-    yLeg = 2;
-    DrawPx(xLeg,yLeg,Red);
-    DisplaySlate();
-  }  
+  {
+    Jumping == true;
+    delay(1500);
+    Jumping == false;
+  }
+ }
 }
-}
+
 
